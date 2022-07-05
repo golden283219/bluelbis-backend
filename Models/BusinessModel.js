@@ -1,0 +1,66 @@
+const mongoose = require('mongoose');
+
+const BusinessSeriviceSchema = mongoose.Schema({
+    createdAt : {type :Date, default : Date.now()}, 
+    title : {type : String, default : ""}, 
+    subtitle : {type : String, default : ""}, 
+    description : {type : String, default : ""},
+    imageUrl : {type : String, default : ""},
+    active : {type : Boolean, default : true},
+    removed : {type : Boolean, default : false},
+})
+
+const BusinessSchema = mongoose.Schema({
+    createdAt : {type : Date, default : Date.now()},
+    userId : {type : mongoose.Types.ObjectId, ref: "Users"},
+    name : {type : String, default : "", required : true, minLength : 3, maxLength : 255},
+    mobile : {type : String, default : "", min : 10, max :15},
+    mobileVerified : {type : Boolean, default : false},
+    email : {type : String, default : "", lowercase : true},
+    emailVerified : {type : Boolean, default : false},
+    website : {type : String, default : ""},
+    description : {type : String, default : ""},
+    yearStarted : {type : String, default : ""},
+    noOfEmployees : {type : String, default : ""},
+    licenceNo : {type : String, default : ""},
+    registrationNo : {type : String, default : ""},
+    hourlyRate : {type : String, default : ""},
+    businessHours : {type : String, default : ""},
+    categoryIds : {type : mongoose.Types.ObjectId, ref : "Categories"},
+    subcategoryIds : [{type : mongoose.Types.ObjectId, ref : "Subcategories"}],
+    information : {type : String, default : ""},
+    address : {type : String, default : ""},
+    addressLine2 : {type : String, default : ""},
+    latitude : {type : String, default : ""},
+    longitude : {type : String, default : ""},
+    country : {type : String, default : ""},
+    state : {type : String, default : ""},
+    city : {type : String, default : ""},
+    pin : {type : String, default : ""},
+    workingRadius : {type : Number, default : ""},
+    showReimbursement : {type : Boolean, default : true},
+    lateFee : {type : Boolean, default : true},
+    moneyBack : {type : Boolean, default : true},
+    serviceInsured : {type : Boolean, default : false},
+    indentityDoc : [{url : {type : String, default : ""}, verified : {type : Boolean, default : false}}],
+    addressDoc : [{url : {type : String, default : ""}, verified : {type : Boolean, default : false}}],
+    registrationDoc : [{url : {type : String, default : ""}, verified : {type : Boolean, default : false}}],
+    policeVerificationDoc : [{url : {type : String, default : ""}, verified : {type : Boolean, default : false}}],
+    otherDoc : [{url : {type : String, default : ""}, verified : {type : Boolean, default : false}}],
+    logoImg : {type : String, default : ""},
+    bannerImg : {type : String, default : ""},
+    workFiles : {type : Array, default : []},
+    businessType : {type : String, default : ""},
+    businessServices : [BusinessSeriviceSchema],
+    profileStatus : {type : Number, default : 0},
+    profileStrength : {type : Number, default : 0},
+    profileStrengthData : {type : Array, default : []},
+    activePlan : {type : mongoose.Types.ObjectId, ref : "Plans"},
+    active : {type : Boolean, default : true},
+    adminVerified : {type : Boolean, default : false},
+});
+
+BusinessSchema.set('toObject', { virtuals: true });
+BusinessSchema.set('toJSON', { virtuals: true });
+const Businesses = mongoose.model("Businesses", BusinessSchema);
+module.exports = Businesses;
